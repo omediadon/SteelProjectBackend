@@ -2,7 +2,7 @@
 
 PHP driven backend for Steel Project; a project management system
 
-[![CircleCI](https://circleci.com/gh/circleci/circleci-docs/tree/teesloane-patch-5.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs/?branch=circleci-project-setup)
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs/tree/teesloane-patch-5.svg?style=svg)](https://circleci.com/gh/omediadon/SteelProjectBackend/?branch=circleci-project-setup)
 
 This is a personal project, made just for learning and personal development. The code has been provided on **AS IS** basis.
 Feel free to share your insights.
