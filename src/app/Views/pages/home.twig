@@ -1,0 +1,46 @@
+{% extends "templates/main.twig" %}
+{% block content %}
+
+    {% if alerts|length > 0 %}
+        {% for alert in alerts %}
+            {% include "parts/alert.twig" with {"alert": alert} %}
+        {% endfor %}
+    {% endif %}
+
+    {% if cards|length > 0 %}
+        <!-- Cards Grid -->
+        <section class="bg-light">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    {% for card in cards %}
+                        <div class="col-md-6 col-lg-4 my-2 col-sm-12">
+                            {% include "parts/card.twig" with {"card":card} only %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+
+    {% if icons|length > 0 %}
+        <!-- Icons Grid -->
+        <section class="features-icons bg-light text-center">
+            <div class="container">
+                <div class="row">
+                    {% for icon in icons %}
+                        {% include "parts/icontext.twig" with {"icon":icon} only %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+
+    {% if testemonials|length > 0 %}
+        <!-- Testimonials -->
+        {% include "parts/testemonials.twig" with {"testemonials":testemonials} only %}
+    {% endif %}
+
+
+{% endblock %}

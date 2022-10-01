@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ hl }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}{{ title }}{% endblock %} &bigodot; {% block name %}{{ sitename }}{% endblock %}</title>
+    {% if css|length > 0 %}
+        {% for style in css %}
+            <link rel="stylesheet" href="{{ style }}"/>
+        {% endfor %}
+    {% endif %}
+
+</head>
+
+<body>
+{% include "parts/navigation.twig" with { "navigation" : navigation} %}
+{% if breadcrumbs|length > 0 %}
+    {% include "parts/breadcrumb.twig" with { "crumbs" : breadcrumbs} %}
+{% endif %}
+
+{% if showMustHead %}
+    {% include "parts/masthead.twig" %}
+{% endif %}
+
+<div id="content">
+    <div class="container-fluid">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<!-- Call to Action -->
+{% if callToAction %}
+    {% include "parts/calltoaction.twig" %}
+{% endif %}
+
+<!-- Footer -->
+{% include "parts/footer.twig" %}
+{% if js|length > 0 %}
+    {% for script in js %}
+        <script src="{{ script }}"></script>
+    {% endfor %}
+{% endif %}
+</body>
+</html>
+

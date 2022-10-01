@@ -1,0 +1,29 @@
+<div class="alert {% if alert.type is defined %}
+{% if alert.type == "info" %} alert-info
+{% elseif alert.type == "success" %} alert-sucess
+{% elseif alert.type == "light" %} alert-light
+{% elseif alert.type == "dark" %} alert-dark
+{% elseif alert.type == "primary" %} alert-primary
+{% elseif alert.type == "secondary" %} alert-secondary
+{% elseif alert.type == "danger" %} alert-danger
+{% elseif alert.type == "warning" %} alert-warning
+{% else %} alert-info
+{% endif %}{% else %} alert-info {% endif %} fade show" role="alert">
+    {% if (not(alert.closable  is defined) or ( alert.closable  is defined and alert.closable == true)) %}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    {% endif %}
+    {% if alert.title is defined %}
+        <h4 class="alert-heading">{{ alert.title }}</h4>
+    {% endif %}
+    {% if alert.text is defined %}
+        <p>
+            {{ alert.text }}
+        </p>
+    {% endif %}
+    {% if alert.footer is defined %}
+        <hr>
+        <p class="mb-0">{{ alert.footer | raw }}</p>
+    {% endif %}
+</div>

@@ -1,0 +1,13 @@
+body {
+	margin-top: 55px;
+}
+
+#biglogo {
+	width: 350px;
+	background: none !important;
+	border: none !important;
+}
+
+.breadcrumb{
+	margin-bottom: 0;
+}
