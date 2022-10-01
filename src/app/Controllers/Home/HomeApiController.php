@@ -9,9 +9,6 @@ use System\Config\ApiInfo;
 use System\Controllers\ApiController;
 
 class HomeApiController extends ApiController{
-	public function __construct(ContainerInterface $container){
-		parent::__construct($container);
-	}
 
 	public function index(ServerRequest $request, Response $response) : Response{
 		$this->request  = $request;

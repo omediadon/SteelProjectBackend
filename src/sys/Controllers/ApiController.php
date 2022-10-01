@@ -42,8 +42,8 @@ abstract class ApiController{
 				$this->status = StatusCodes::HTTP_NOT_ACCEPTABLE;
 			}
 		}
-		$this->payload["error"]["code"]    = $this->status;
-		$this->payload["error"]["message"] = StatusCodes::getMessageForCode($this->status);
+		$this->payload["http"]["code"]    = $this->status;
+		$this->payload["http"]["message"] = StatusCodes::getMessageForCode($this->status);
 
 		if(StatusCodes::canHaveBody($this->status)){
 			$this->response = $this->response->withJson($this->payload, $this->status, JSON_PRETTY_PRINT);

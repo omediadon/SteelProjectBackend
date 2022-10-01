@@ -21,11 +21,11 @@ final class ActionError implements JsonSerializable{
 	private string $type;
 
 	/**
-	 * @var string
+	 * @var null|string
 	 */
 	private ?string $description;
 	/**
-	 * @var string
+	 * @var null|string
 	 */
 	private ?string $class;
 
