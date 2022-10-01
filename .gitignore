@@ -1,7 +1,6 @@
-composer.phar
 /vendor/
 /.idea/
-/var/keys/public.pem
-/var/keys/private.pem
+#/var/keys/public.pem
+#/var/keys/private.pem
 *.log
-.env
+#.env
