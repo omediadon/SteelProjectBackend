@@ -2,16 +2,23 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/php:8.0.13-node
+      - image: cimg/php:8.0.13-browsers
         environment:
           APP_ENV: test
     steps:
+      - browser-tools/install-browser-tools
+      - run: 
+          name: Software versions
+          command: |
+            php --version
+            node --version
+            java --version
       - run:
           name: Install system packages
           command: sudo apt-get update && sudo apt-get -y install git
-      - run:
-          name: Install PHP extensions
-          command: sudo -E docker-php-ext-install -j$(nproc) gd pdo
+#      - run:
+#          name: Install PHP extensions
+#          command: sudo -E docker-php-ext-install -j$(nproc) gd pdo
       - checkout
       - run:
           name: Install Composer
