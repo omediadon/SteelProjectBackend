@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /var/www/html
     docker:
-      - image: php:7.1-apache
+      - image: php:8.0.13-apache
         environment:
           APP_ENV: test
     steps:
