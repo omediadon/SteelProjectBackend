@@ -2,7 +2,7 @@
 
 PHP driven backend for Steel Project; a project management system
 
-[![CircleCI](https://circleci.com/gh/omediadon/SteelProjectBackend/tree/master.svg?style=svg)](https://circleci.com/gh/omediadon/SteelProjectBackend/?branch=master)
+[![CircleCI](https://circleci.com/gh/omediadon/SteelProjectBackend/tree/develop.svg?style=svg)](https://circleci.com/gh/omediadon/SteelProjectBackend/?branch=develop)
 
 This is a personal project, made just for learning and personal development. The code has been provided on **AS IS** basis.
 Feel free to share your insights.
@@ -32,6 +32,7 @@ This project uses a number of open source projects to work properly:
 * [Monolog] - Yes, please!
 * [Selective] - Just for an easy life.
 * [JWT] - For API auth.
+* [PHP-JWT] - Wrapper for JWT from Firebase.
 * [Slim PHP] - Any skeleton needs bones, right?
 * [Faker PHP] - Used with seeders,to fake data.
 * [Eloquent] - Laravel's ORM.
@@ -48,6 +49,7 @@ Make a change in your files and submit a pull request!
    [Monolog]: <https://github.com/Seldaek/monolog>
    [Selective]: <https://github.com/selective-php>
    [JWT]: <https://jwt.io/>
+   [PHP-JWT]: <https://github.com/firebase/php-jwt/>
    [Faker PHP]: <https://fakerphp.github.io/>
    [Slim PHP]: <https://www.slimframework.com/>
 
