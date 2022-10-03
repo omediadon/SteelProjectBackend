@@ -8,7 +8,6 @@ class SiteSettings{
 	public ApiInfo        $apiInfo;
 	public Storage        $storage;
 	public Auth           $auth;
-	public Database       $database;
 	public TerraSession   $session;
 	public Logger         $logger;
 	public FrontendAssets $assets;
@@ -19,7 +18,6 @@ class SiteSettings{
 		$this->apiInfo   = new ApiInfo();
 		$this->storage   = new Storage();
 		$this->auth      = new Auth();
-		$this->database  = new Database();
 		$this->session   = new TerraSession();
 		$this->logger    = new Logger();
 		$this->assets    = new FrontendAssets();

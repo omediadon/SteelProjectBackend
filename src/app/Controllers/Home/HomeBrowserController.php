@@ -2,17 +2,11 @@
 
 namespace App\Controllers\Home;
 
-use Psr\Container\ContainerInterface;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use System\Controllers\BrowserController;
-use System\Utils\Translator;
 
 final class HomeBrowserController extends BrowserController{
-	public function __construct(ContainerInterface $container, Translator $translator){
-		parent::__construct($container, $translator);
-	}
-
 	public function getHome(ServerRequest $request, Response $response) : Response{
 		$this->request = $request;
 		$hl            = $this->prepare();
@@ -24,7 +18,7 @@ final class HomeBrowserController extends BrowserController{
 		$icons = [
 			[
 				"icon"  => "icon-screen-desktop",
-				"title" => "Fully Responsive",
+				"title" => $this->translator->t('HELLO'),
 				"text"  => "This theme will look great on any device, no matter the size!",
 			],
 			[
