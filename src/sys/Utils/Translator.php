@@ -2,14 +2,9 @@
 
 namespace System\Utils;
 
-use Exception;
-use System\Config\SiteSettings;
+use App\I18N;
 
 final class Translator{
-	/**
-	 * @var string
-	 */
-	private string $langFile = "";
 	/**
 	 * @var string
 	 */
@@ -22,29 +17,10 @@ final class Translator{
 	 * @var array
 	 */
 	private array $translationTable;
-	/**
-	 * @var false
-	 */
-	private bool $canTranslate = true;
 
-	public function __construct(private SiteSettings $settings){
-		$this->langFile = $this->settings->storage->lang;
-		if(!$this->isExist()){
-			$this->canTranslate=false;
-		}
+	public function __construct(){
 		$this->defaultLanguage  = $_ENV['DEFAULT_LANGUAGE'];
-		$this->translationTable = include $this->langFile;
-	}
-
-	private function isExist() : bool{
-		if(!file_exists($this->langFile)){
-			return false;
-		}
-		if(!is_readable($this->langFile)){
-			return false;
-		}
-
-		return true;
+		$this->translationTable = I18N::getTranslations();
 	}
 
 	public static function getAvailableLanguages() : array{
@@ -60,8 +36,6 @@ final class Translator{
 	}
 
 	public function t(string $word, string $lang = "") : string{
-		if(!$this->canTranslate)
-			return $word;
 		if($lang == ""){
 			$lang = $this->theLanguage;
 		}
@@ -74,8 +48,6 @@ final class Translator{
 
 		$currLang = $this->translationTable[$lang];
 		if(!key_exists($wordUpper, $currLang)){
-
-
 			$lang     = $this->defaultLanguage;
 			$currLang = $this->translationTable[$lang];
 			if(!key_exists($wordUpper, $currLang)){
