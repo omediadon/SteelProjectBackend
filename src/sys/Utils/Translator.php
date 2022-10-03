@@ -8,10 +8,6 @@ final class Translator{
 	/**
 	 * @var string
 	 */
-	private string $langFile = "";
-	/**
-	 * @var string
-	 */
 	private string $defaultLanguage;
 	/**
 	 * @var string
