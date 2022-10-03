@@ -7,7 +7,6 @@ class Storage{
 	public string  $publicAvatars  = "upload/avatars/";
 	public string  $emailTemplates = "var/templates/email/";
 	public string  $keys           = "var/keys/";
-	public string  $lang           = "var/i18n.php";
 	public string  $logs           = "var/logs/app.log";
 	public string  $cache          = "var/cache/";
 	public string  $views          = "src/app/Views/";
@@ -18,7 +17,6 @@ class Storage{
 		$this->avatarsFolder  = $this->home.$this->avatarsFolder;
 		$this->emailTemplates = $this->home.$this->emailTemplates;
 		$this->keys           = $this->home.$this->keys;
-		$this->lang           = $this->home.$this->lang;
 		$this->logs           = $this->home.$this->logs;
 		$this->cache          = $this->home.$this->cache;
 		$this->views          = $this->home.$this->views;
