@@ -63,7 +63,7 @@ final class JwtAuth{
 	 */
 	public function validateToken(string $accessToken) : bool{
 		$secret_Key = $_ENV['JWT_SECRET'];
-		$now        = Chronos::now();
+		$now        = Chronos::now()->getTimestamp();
 		try{
 			$token = JWT::decode($accessToken, new Key($secret_Key, 'HS512'));
 		}
@@ -71,7 +71,7 @@ final class JwtAuth{
 			return false;
 		}
 
-		if($token->iss !== $this->issuer || $token->nbf > $now->getTimestamp() || $token->exp < $now->getTimestamp()){
+		if($token->iss !== $this->issuer || $token->nbf > $now || $token->exp < $now){
 			return false;
 		}
 
