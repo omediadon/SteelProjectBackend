@@ -92,10 +92,8 @@ class ContainerFactory{
 
 			$issuer     = $config->issuer;
 			$lifetime   = $config->lifetime;
-			$privateKey = $config->privateKey;
-			$publicKey  = $config->publicKey;
 
-			return new JwtAuth($issuer, $lifetime, $privateKey, $publicKey);
+			return new JwtAuth($issuer, $lifetime);
 		});
 
 		$container->set(ValidationExceptionMiddleware::class, function(ContainerInterface $container){

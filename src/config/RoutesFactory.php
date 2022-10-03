@@ -13,6 +13,7 @@ namespace Config;
 use App\Controllers\Home\HomeApiController;
 use App\Controllers\Home\HomeBrowserController;
 use App\Controllers\User\UserApiController;
+use App\Middlewares\JwtMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 use System\Config\SiteSettings;
@@ -38,6 +39,15 @@ class RoutesFactory{
 				$subGroup->get('[/]', UserApiController::class . ':index')
 						 ->add(JsonRequestMiddleware::class);
 				$subGroup->get('/all[/]', UserApiController::class . ':index')
+						 ->add(JsonRequestMiddleware::class);
+			})
+				  ->add(JsonRequestMiddleware::class);
+
+			$group->group('/token', function(RouteCollectorProxy $subGroup){
+				$subGroup->get('[/]', HomeApiController::class . ':getTestingToken')
+						 ->add(JsonRequestMiddleware::class);
+				$subGroup->get('/protected[/]', HomeApiController::class . ':protectedRoute')
+						 ->add(JwtMiddleware::class)
 						 ->add(JsonRequestMiddleware::class);
 			})
 				  ->add(JsonRequestMiddleware::class);

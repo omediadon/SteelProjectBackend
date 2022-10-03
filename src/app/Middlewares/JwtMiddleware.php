@@ -9,21 +9,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Psr7\Factory\StreamFactory;
+use System\Utils\StatusCodes;
 
 final class JwtMiddleware implements MiddlewareInterface{
-	/**
-	 * @var JwtAuth
-	 */
-	private JwtAuth $jwtAuth;
-
-	/**
-	 * @var ResponseFactoryInterface
-	 */
-	private ResponseFactoryInterface $responseFactory;
-
-	public function __construct(JwtAuth $jwtAuth, ResponseFactoryInterface $responseFactory){
-		$this->jwtAuth         = $jwtAuth;
-		$this->responseFactory = $responseFactory;
+	public function __construct(private JwtAuth $jwtAuth, private ResponseFactoryInterface $responseFactory){
 	}
 
 	/**
@@ -35,29 +24,24 @@ final class JwtMiddleware implements MiddlewareInterface{
 	 * @return ResponseInterface The response
 	 */
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface{
-		$authorization = explode(' ', (string)$request->getHeaderLine('Authorization'));
+		$authorization = explode(' ', $request->getHeaderLine('Authorization'));
 		$token         = $authorization[1] ?? '';
 
 		if(!$token || !$this->jwtAuth->validateToken($token)){
-			$stream = (new StreamFactory())->createStream(json_encode([
-																		  "error" => [
-																			  "code"    => 401,
-																			  "message" => "You are you doing here? This is a restricted are!",
-																		  ],
-																	  ], JSON_PRETTY_PRINT));
+			$payload = [
+				"error" => [
+					"code"    => StatusCodes::HTTP_UNAUTHORIZED,
+					"message" => StatusCodes::getMessageForCode(StatusCodes::HTTP_UNAUTHORIZED),
+				],
+			];
+			$stream  = (new StreamFactory())->createStream(json_encode($payload, JSON_PRETTY_PRINT));
 
 			return $this->responseFactory->createResponse()
 										 ->withBody($stream)
 										 ->withHeader('Content-Type', 'application/json')
-										 ->withStatus(401, 'Unauthorized');
+										 ->withStatus(StatusCodes::HTTP_UNAUTHORIZED,
+													  StatusCodes::getMessageForCode(StatusCodes::HTTP_UNAUTHORIZED));
 		}
-
-		// Append valid token
-		$parsedToken = $this->jwtAuth->createParsedToken($token);
-		$request     = $request->withAttribute('authToken', $parsedToken);
-
-		// Append the user id as request attribute
-		$request = $request->withAttribute('authContext', $parsedToken->getClaim('context'));
 
 		return $handler->handle($request);
 	}
