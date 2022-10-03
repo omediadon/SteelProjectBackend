@@ -22,13 +22,15 @@ final class Translator{
 	 * @var array
 	 */
 	private array $translationTable;
+	/**
+	 * @var false
+	 */
+	private bool $canTranslate = true;
 
-	public function __construct(SiteSettings $settings){
-		$this->settings = $settings;
-		$this->langFile = $settings->storage->lang;
+	public function __construct(private SiteSettings $settings){
+		$this->langFile = $this->settings->storage->lang;
 		if(!$this->isExist()){
-			/** @noinspection PhpUnhandledExceptionInspection */
-			throw new Exception('Translator cant find the files.');
+			$this->canTranslate=false;
 		}
 		$this->defaultLanguage  = $_ENV['DEFAULT_LANGUAGE'];
 		$this->translationTable = include $this->langFile;
@@ -45,7 +47,7 @@ final class Translator{
 		return true;
 	}
 
-	public static function getAvailableLanguages(){
+	public static function getAvailableLanguages() : array{
 		return explode(',', $_ENV['AVAILABLE_LANGUAGES']);
 	}
 
@@ -58,6 +60,8 @@ final class Translator{
 	}
 
 	public function t(string $word, string $lang = "") : string{
+		if(!$this->canTranslate)
+			return $word;
 		if($lang == ""){
 			$lang = $this->theLanguage;
 		}
@@ -65,31 +69,19 @@ final class Translator{
 		$wordUpper = strtoupper($word);
 
 		if(!key_exists($lang, $this->translationTable)){
-			if($this->settings->apiInfo->debug){
-				/** @noinspection PhpUnhandledExceptionInspection */
-				throw new Exception("Missing Translation language  $lang", 0);
-			}
+			return $word;
 		}
 
 		$currLang = $this->translationTable[$lang];
 		if(!key_exists($wordUpper, $currLang)){
-			if($this->settings->apiInfo->debug){
-				/** @noinspection PhpUnhandledExceptionInspection */
-				throw new Exception("Missing Translation $word in $lang", 1);
-			}
+
 
 			$lang     = $this->defaultLanguage;
 			$currLang = $this->translationTable[$lang];
 			if(!key_exists($wordUpper, $currLang)){
-				if($this->settings->apiInfo->debug){
-					/** @noinspection PhpUnhandledExceptionInspection */
-					throw new Exception("Missing Translation $word in $lang", 1);
-				}
-
 				return $word;
 			}
 
-			return $currLang[$wordUpper];
 		}
 
 		return $currLang[$wordUpper];

@@ -8,7 +8,6 @@ use Psr\Container\NotFoundExceptionInterface;
 use Slim\Csrf\Guard;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
-use Slim\Interfaces\RouteParserInterface;
 use Slim\Routing\RouteParser;
 use Slim\Views\Twig;
 use SlimSession\Helper;
@@ -17,30 +16,16 @@ use System\Config\SiteSettings;
 use System\Utils\Translator;
 
 abstract class BrowserController{
-	protected ContainerInterface   $container;
-	protected SiteSettings         $siteSetup;
-	protected RouteParserInterface $router;
-	protected Helper               $session;
-	protected Guard                $csrf;
-	protected Translator           $translator;
-	protected ServerRequest        $request;
+	protected ServerRequest $request;
 
-	/**
-	 * @throws NotFoundExceptionInterface
-	 * @throws ContainerExceptionInterface
-	 */
-	public function __construct(ContainerInterface $container, Translator $translator){
-		$this->container  = $container;
-		$this->router     = $this->container->get(RouteParser::class);
-		$this->siteSetup  = $this->container->get(SiteSettings::class);
-		$this->session    = $this->container->get(Helper::class);
-		$this->csrf       = $this->container->get(Guard::class);
-		$this->translator = $translator;
+	public function __construct(protected ContainerInterface $container, protected Translator $translator,
+								protected RouteParser $router, protected Helper $session, protected Guard $csrf,
+								protected SiteSettings $siteSetup){
+
 	}
 
 	/**
 	 * @throws ContainerExceptionInterface
-	 * @throws NotFoundExceptionInterface
 	 */
 	final public function render(Response $response, string $file, array $params = []) : Response{
 		$params = $this->prepareParams($params);
