@@ -42,12 +42,17 @@ jobs:
           command: |
             mysql -h 127.0.0.1 -u root -ppassword --execute="SHOW DATABASES"
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
       - run:
           name: Install project dependencies
           command: composer install
-#      - run:
-#          name: Run CS tests
-#          command: vendor/bin/phpcs
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
       - run:
           name: Create and seed the database
           command: php command migrate --seed
