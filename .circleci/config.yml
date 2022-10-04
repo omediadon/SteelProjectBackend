@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/php:8.0.13-browsers
+      - image: cimg/php:8.0-browsers
         environment:
           MYSQL_HOST: 127.0.0.1
           MYSQL_DB: steelproject
@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Install PHP extensions
           command: |
-            sudo -E install-php-extensions xsl xdebug pdo zip mbstring
+            sudo docker-php-ext-install xsl xdebug pdo zip mbstring
             sudo docker-php-ext-enable xdebug
       - checkout
       - run:
