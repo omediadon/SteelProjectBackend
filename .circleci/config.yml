@@ -31,7 +31,7 @@ jobs:
           name: Install PHP extensions
           command: |
             sudo pecl install xdebug
-            sudo docker-php-ext-enable xdebug
+#            sudo docker-php-ext-enable xdebug
       - run:
           name: Display version information
           command: |
