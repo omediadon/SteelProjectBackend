@@ -4,6 +4,8 @@ PHP driven backend for Steel Project; a project management system
 
 [![CircleCI](https://circleci.com/gh/omediadon/SteelProjectBackend/tree/develop.svg?style=svg)](https://circleci.com/gh/omediadon/SteelProjectBackend/?branch=develop)
 
+[![CircleCI](https://dl.circleci.com/insights-snapshot/gh/omediadon/SteelProjectBackend/develop/workflow/badge.svg?window=7d)](https://app.circleci.com/insights/gh/omediadon/SteelProjectBackend/workflows/workflow/overview?branch=develop&reporting-window=last-7-days&insights-snapshot=true)
+
 This is a personal project, made just for learning and personal development. The code has been provided on **AS IS** basis.
 Feel free to share your insights.
 
