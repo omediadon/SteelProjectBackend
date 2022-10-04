@@ -59,4 +59,8 @@ jobs:
           command: php command migrate --seed
       - run: 
           name: Run Unit tests
-          command: composer test
+          command: |
+            mkdir -p ./phpunit
+            composer test
+      - store_test_results:
+          path: ./phpunit
