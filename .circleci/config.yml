@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Install PHP extensions
           command: |
-            sudo docker-php-ext-install xsl xdebug pdo zip mbstring
+            sudo pecl install xdebug
             sudo docker-php-ext-enable xdebug
       - checkout
       - run:
