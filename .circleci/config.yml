@@ -8,7 +8,7 @@ jobs:
           MYSQL_DB: steelproject
           MYSQL_USER: root
           MYSQL_PASSWORD: password
-      - image: cimg/mysql:8.0
+      - image: cimg/mysql:5.7
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: steelproject
