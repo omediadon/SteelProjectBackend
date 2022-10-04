@@ -1,6 +1,5 @@
 /vendor/
 /.idea/
-#/var/keys/public.pem
-#/var/keys/private.pem
 *.log
-#.env
+/phpunit/
+.phpunit.result.cache

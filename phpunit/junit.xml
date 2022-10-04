@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="2" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.147207">
+    <testsuite name="Tests" tests="2" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.147207">
+      <testsuite name="Tests\TestCase\ApiHomeTest" file="F:\0S\SteelProjectBackend\tests\TestCase\ApiHomeTest.php" tests="2" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.147207">
+        <testcase name="testAction" class="Tests\TestCase\ApiHomeTest" classname="Tests.TestCase.ApiHomeTest" file="F:\0S\SteelProjectBackend\tests\TestCase\ApiHomeTest.php" line="12" assertions="2" time="0.139366"/>
+        <testcase name="testPageNotFound" class="Tests\TestCase\ApiHomeTest" classname="Tests.TestCase.ApiHomeTest" file="F:\0S\SteelProjectBackend\tests\TestCase\ApiHomeTest.php" line="21" assertions="1" time="0.007841"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

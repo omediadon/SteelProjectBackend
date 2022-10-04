@@ -31,4 +31,7 @@
         <env name="ENVIRONMENT" value="DEBUG"/>
         <env name="PHPUNIT_TEST_SUITE" value="1"/>
     </php>
+    <logging>
+        <junit outputFile="phpunit/junit.xml"/>
+    </logging>
 </phpunit>
