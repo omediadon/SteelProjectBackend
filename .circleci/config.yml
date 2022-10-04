@@ -13,6 +13,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: steelproject
           MYSQL_PASSWORD: password
+    resource_class: small
     steps:
       - run:
           name: Waiting for MySQL to be ready
@@ -42,15 +43,26 @@ jobs:
           command: |
             mysql -h 127.0.0.1 -u root -ppassword --execute="SHOW DATABASES"
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
       - run:
           name: Install project dependencies
           command: composer install
-#      - run:
-#          name: Run CS tests
-#          command: vendor/bin/phpcs
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
       - run:
           name: Create and seed the database
           command: php command migrate --seed
       - run: 
           name: Run Unit tests
-          command: composer test
+          command: |
+            mkdir -p ./phpunit
+            composer test
+      - store_test_results:
+          path: ./phpunit
+      - store_artifacts:
+          path: ./phpunit
