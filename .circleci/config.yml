@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: cimg/php:8.0-browsers
         environment:
@@ -66,3 +66,12 @@ jobs:
           path: ./phpunit
       - store_artifacts:
           path: ./phpunit
+
+workflows:
+  test:
+    jobs:
+      - test
+        filters:
+          branches:
+            only:
+              - develop
