@@ -1,7 +1,10 @@
 <?php
 
+namespace Database\Migrations;
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use System\Models\Enums\ActiveStatus;
 
 class UserMigration{
 	function run(){
@@ -17,7 +20,18 @@ class UserMigration{
 				   $table->string('password');
 				   $table->string('email')
 						 ->unique();
-				   $table->timestamps();
+				   $table->string('profile_picture')
+						 ->nullable();
+				   $table->enum('status', [
+					   ActiveStatus::STATUS_INACTIVE,
+					   ActiveStatus::STATUS_ACTIVE,
+				   ])
+						 ->default(ActiveStatus::STATUS_INACTIVE);
+				   $table->string('activate_token')
+						 ->nullable();
+				   $table->rememberToken();
+				   $table->timestampsTz();
+				   $table->softDeletesTz();
 			   });
 	}
 }

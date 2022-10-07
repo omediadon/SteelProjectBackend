@@ -1,5 +1,8 @@
 /vendor/
 /.idea/
 *.log
+/public/upload/*.jpg
+/public/upload/*.jpeg
+/public/upload/*.png
 /phpunit/
 .phpunit.result.cache
