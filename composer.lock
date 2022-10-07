@@ -1006,7 +1006,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v9.33.0",
+            "version": "v9.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -1061,7 +1061,7 @@
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v9.33.0",
+            "version": "v9.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1107,7 +1107,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v9.33.0",
+            "version": "v9.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -1158,7 +1158,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v9.33.0",
+            "version": "v9.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1206,16 +1206,16 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v9.33.0",
+            "version": "v9.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "bbfc48604ce871248f75b82a27c8a88fc827ffe8"
+                "reference": "d6880620eecac4c0e1882c59889e58191232967c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/bbfc48604ce871248f75b82a27c8a88fc827ffe8",
-                "reference": "bbfc48604ce871248f75b82a27c8a88fc827ffe8",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/d6880620eecac4c0e1882c59889e58191232967c",
+                "reference": "d6880620eecac4c0e1882c59889e58191232967c",
                 "shasum": ""
             },
             "require": {
@@ -1270,11 +1270,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-29T13:31:14+00:00"
+            "time": "2022-10-03T15:39:23+00:00"
         },
         {
             "name": "illuminate/macroable",
-            "version": "v9.33.0",
+            "version": "v9.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1320,16 +1320,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v9.33.0",
+            "version": "v9.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "9c46abb8707ba30bd60142d8fd2e2f86e3d1f016"
+                "reference": "c5eeb30bbeb1f505938be61cb70ef614451ee446"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/9c46abb8707ba30bd60142d8fd2e2f86e3d1f016",
-                "reference": "9c46abb8707ba30bd60142d8fd2e2f86e3d1f016",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/c5eeb30bbeb1f505938be61cb70ef614451ee446",
+                "reference": "c5eeb30bbeb1f505938be61cb70ef614451ee446",
                 "shasum": ""
             },
             "require": {
@@ -1386,7 +1386,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-30T06:19:24+00:00"
+            "time": "2022-10-03T14:55:35+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -5296,12 +5296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "51ff2179e48fdb0d495649a9c0681f46de777f4e"
+                "reference": "b311503298c072e565411e3ef61c04519272473f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/51ff2179e48fdb0d495649a9c0681f46de777f4e",
-                "reference": "51ff2179e48fdb0d495649a9c0681f46de777f4e",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/b311503298c072e565411e3ef61c04519272473f",
+                "reference": "b311503298c072e565411e3ef61c04519272473f",
                 "shasum": ""
             },
             "conflict": {
@@ -5352,7 +5352,7 @@
                 "cesnet/simplesamlphp-module-proxystatistics": "<3.1",
                 "codeception/codeception": "<3.1.3|>=4,<4.1.22",
                 "codeigniter/framework": "<=3.0.6",
-                "codeigniter4/framework": "<4.1.9",
+                "codeigniter4/framework": "<4.2.7",
                 "codeigniter4/shield": "= 1.0.0-beta",
                 "codiad/codiad": "<=2.8.4",
                 "composer/composer": "<1.10.26|>=2-alpha.1,<2.2.12|>=2.3,<2.3.5",
@@ -5585,7 +5585,7 @@
                 "pressbooks/pressbooks": "<5.18",
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/blockwishlist": ">=2,<2.1.1",
-                "prestashop/contactform": ">1.0.1,<4.3",
+                "prestashop/contactform": ">=1.0.1,<4.3",
                 "prestashop/gamification": "<2.3.2",
                 "prestashop/prestashop": ">=1.6.0.10,<1.7.8.7",
                 "prestashop/productcomments": "<5.0.2",
@@ -5812,7 +5812,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-01T16:04:26+00:00"
+            "time": "2022-10-06T20:04:40+00:00"
         },
         {
             "name": "sebastian/cli-parser",

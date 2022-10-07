@@ -68,7 +68,6 @@ class StatusCodes{
 		// [Informational 1xx]
 		100 => '100 Continue',
 		101 => '101 Switching Protocols',
-
 		// [Successful 2xx]
 		200 => '200 OK',
 		201 => '201 Created',
@@ -77,7 +76,6 @@ class StatusCodes{
 		204 => '204 No Content',
 		205 => '205 Reset Content',
 		206 => '206 Partial Content',
-
 		// [Redirection 3xx]
 		300 => '300 Multiple Choices',
 		301 => '301 Moved Permanently',
@@ -87,7 +85,6 @@ class StatusCodes{
 		305 => '305 Use Proxy',
 		306 => '306 (Unused)',
 		307 => '307 Temporary Redirect',
-
 		// [Client Error 4xx]
 		400 => '400 Bad Request',
 		401 => '401 Unauthorized',
@@ -107,7 +104,6 @@ class StatusCodes{
 		415 => '415 Unsupported Media Type',
 		416 => '416 Requested Range Not Satisfiable',
 		417 => '417 Expectation Failed',
-
 		// [Server Error 5xx]
 		500 => '500 Internal Server Error',
 		501 => '501 Not Implemented',
@@ -118,7 +114,7 @@ class StatusCodes{
 	];
 
 	public static function httpHeaderFor($code){
-		return 'HTTP/1.1 '.self::$messages[$code];
+		return 'HTTP/1.1 ' . self::$messages[$code];
 	}
 
 	public static function getMessageForCode($code){
@@ -134,5 +130,8 @@ class StatusCodes{
 			($code < self::HTTP_CONTINUE || $code >= self::HTTP_OK) && // and not 204 NO CONTENT
 			$code != self::HTTP_NO_CONTENT && // and not 304 NOT MODIFIED
 			$code != self::HTTP_NOT_MODIFIED;
+	}
+
+	private function __construtor(){
 	}
 }
