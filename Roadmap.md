@@ -3,23 +3,23 @@
 
 Progress: 11% 
 
-##  0.0.2.0   ![54%](https://progress-bar.dev/54/?width=250&color=babaca&title=Progress) 
+##  0.0.2.0   ![54%](https://progress-bar.dev/54/?width=250  title=Progress) 
 
-- [ ] Users Management   ![66%](https://progress-bar.dev/66/?width=250&color=babaca&title=Progress) 
+- [ ] Users Management   ![66%](https://progress-bar.dev/66/?width=250  title=Progress) 
 
-	- [x] Create migrations for users   ![100%](https://progress-bar.dev/100/?width=250&color=babaca&title=Progress) 
+	- [x] Create migrations for users   ![100%](https://progress-bar.dev/100/?width=250  title=Progress) 
 
-	- [x] Basic Users' implementation  ![100%](https://progress-bar.dev/100/?width=250&color=babaca&title=Progress) 
+	- [x] Basic Users' implementation  ![100%](https://progress-bar.dev/100/?width=250  title=Progress) 
 
 	- [ ] Sign in/up   
 
-- [ ] User Roles ![75%](https://progress-bar.dev/75/?width=250&color=babaca&title=Progress) 
+- [ ] User Roles ![75%](https://progress-bar.dev/75/?width=250  title=Progress) 
 
-	- [x] Create roles' migration ![100%](https://progress-bar.dev/100/?width=250&color=babaca&title=Progress) 
+	- [x] Create roles' migration ![100%](https://progress-bar.dev/100/?width=250  title=Progress) 
 
-	- [x] Create permissions' migration ![100%](https://progress-bar.dev/100/?width=250&color=babaca&title=Progress) 
+	- [x] Create permissions' migration ![100%](https://progress-bar.dev/100/?width=250  title=Progress) 
 
-	- [x] Basic Site Roles ![100%](https://progress-bar.dev/100/?width=250&color=babaca&title=Progress) 
+	- [x] Basic Site Roles ![100%](https://progress-bar.dev/100/?width=250  title=Progress) 
 
 	- [ ] Middle-wares for protection  
 
@@ -31,20 +31,20 @@ Progress: 11%
 
 	- [ ] Create an extractor to extract translatable strings from view and classes  
 
-- [ ] Console ![75%](https://progress-bar.dev/75/?width=250&color=babaca&title=Progress) 
+- [ ] Console ![75%](https://progress-bar.dev/75/?width=250  title=Progress) 
 
 	- [x] Update console script to support colors ![100%](https://progress-bar.dev/100/?
-width=250&color=babaca&title=Progress) 
+width=250  title=Progress) 
 
 	- [x] Update console script to handle sorted migrations/seeders ![100%](https://progress-bar.dev/100/?
-width=250&color=babaca&title=Progress) 
+width=250  title=Progress) 
 
 	- [x] Separate the console functional logic from display logic ![100%](https://progress-bar.dev/100/?
-width=250&color=babaca&title=Progress) 
+width=250  title=Progress) 
 
 	- [ ] Add a progress bar to console tasks  
 
-##  0.0.3.0 ![25%](https://progress-bar.dev/25/?width=250&color=babaca&title=Progress) 
+##  0.0.3.0 ![25%](https://progress-bar.dev/25/?width=250  title=Progress) 
 
 - [ ] Organisations   
 
@@ -52,12 +52,12 @@ width=250&color=babaca&title=Progress)
 
 	- [ ] Protect organisations   
 
-- [ ] Organisation Roles ![50%](https://progress-bar.dev/50/?width=250&color=babaca&title=Progress)
+- [ ] Organisation Roles ![50%](https://progress-bar.dev/50/?width=250  title=Progress)
 
 	- [ ] Access levels are defined by roles  (RBAC)  
 
 	- [x] Add permissions to existing roles system ![100%](https://progress-bar.dev/100/?
-      width=250&color=babaca&title=Progress) 
+      width=250  title=Progress) 
 
 ##  0.0.4.0   
 
