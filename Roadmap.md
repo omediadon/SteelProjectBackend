@@ -7,19 +7,19 @@ Progress: 11%
 
 - [ ] Users Management   ![66%](https://progress-bar.dev/66/?width=250&title=Progress) 
 
-	- [x] Create migrations for users   ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
+	- [x] Create migrations for users
 
-	- [x] Basic Users' implementation  ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
+	- [x] Basic Users' implementation
 
 	- [ ] Sign in/up   
 
 - [ ] User Roles ![75%](https://progress-bar.dev/75/?width=250&title=Progress) 
 
-	- [x] Create roles' migration ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
+	- [x] Create roles' migrations
 
-	- [x] Create permissions' migration ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
+	- [x] Create permissions' migrations
 
-	- [x] Basic Site Roles ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
+	- [x] Basic Site Roles
 
 	- [ ] Middle-wares for protection  
 
@@ -33,11 +33,11 @@ Progress: 11%
 
 - [ ] Console ![75%](https://progress-bar.dev/75/?width=250&title=Progress) 
 
-	- [x] Update console script to support colors ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
+	- [x] Update console script to support colors  
 
-	- [x] Update console script to handle sorted migrations/seeders ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
+	- [x] Update console script to handle sorted migrations/seeders 
 
-	- [x] Separate the console functional logic from display logic ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
+	- [x] Separate the console functional logic from display logic 
 
 	- [ ] Add a progress bar to console tasks  
 
@@ -53,7 +53,7 @@ Progress: 11%
 
 	- [ ] Access levels are defined by roles  (RBAC)  
 
-	- [x] Add permissions to existing roles system ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
+	- [x] Add permissions to existing roles system  
 
 ##  0.0.4.0   
 
