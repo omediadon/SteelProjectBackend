@@ -33,14 +33,11 @@ Progress: 11%
 
 - [ ] Console ![75%](https://progress-bar.dev/75/?width=250&title=Progress) 
 
-	- [x] Update console script to support colors ![100%](https://progress-bar.dev/100/?
-width=250&title=Progress) 
+	- [x] Update console script to support colors ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
 
-	- [x] Update console script to handle sorted migrations/seeders ![100%](https://progress-bar.dev/100/?
-width=250&title=Progress) 
+	- [x] Update console script to handle sorted migrations/seeders ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
 
-	- [x] Separate the console functional logic from display logic ![100%](https://progress-bar.dev/100/?
-width=250&title=Progress) 
+	- [x] Separate the console functional logic from display logic ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
 
 	- [ ] Add a progress bar to console tasks  
 
@@ -56,8 +53,7 @@ width=250&title=Progress)
 
 	- [ ] Access levels are defined by roles  (RBAC)  
 
-	- [x] Add permissions to existing roles system ![100%](https://progress-bar.dev/100/?
-      width=250&title=Progress) 
+	- [x] Add permissions to existing roles system ![100%](https://progress-bar.dev/100/?width=250&title=Progress) 
 
 ##  0.0.4.0   
 
