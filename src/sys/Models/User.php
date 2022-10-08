@@ -6,6 +6,8 @@ use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use System\Models\Enums\ActiveStatus;
+use function password_hash;
+use const PASSWORD_BCRYPT;
 
 /**
  * @property int      id
@@ -69,4 +71,14 @@ class User extends Model{
 		'deleted_at',
 		'remember_token',
 	];
+
+	/**
+	 * Always encrypt password when it is being updated.
+	 *
+	 * @param $value
+	 *
+	 */
+	public function setPasswordAttribute($value){
+		$this->attributes['password'] = password_hash($value, PASSWORD_BCRYPT);
+	}
 }

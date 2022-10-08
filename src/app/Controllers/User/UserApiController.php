@@ -2,21 +2,28 @@
 
 namespace App\Controllers\User;
 
-use \Exception;
+use App\Models\Role;
+use App\Models\User;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use System\Controllers\ApiController;
-use System\Models\User;
 
 class UserApiController extends ApiController{
 
-	public function index(ServerRequest $request, Response $response) : Response{
+	public function index(ServerRequest $request, Response $response): Response{
+		/**
+		 * @var Role $role
+		 */
 		$this->request  = $request;
 		$this->response = $response;
-
-		$users      = User::all();
-		$this->data = $users;
-
+		// This is an admin
+		$user           = User::find(1);
+		// This s a member
+		$anotherUser    = User::find(5);
+		$this->data     = [
+			$user->can('can_edit_reviews'),
+			$anotherUser->can('can_edit_reviews'),
+		];
 		$this->prepare();
 
 		return $this->render();

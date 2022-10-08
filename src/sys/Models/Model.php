@@ -4,6 +4,6 @@ namespace System\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Model extends Eloquent{
+abstract class Model extends Eloquent{
 
 }

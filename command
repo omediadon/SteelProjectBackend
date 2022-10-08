@@ -72,7 +72,7 @@ class Command{
 		Console::log("Done!", color: 'bold', background_color: 'cyan');
 		$time_end = microtime(true);
 		Console::log("Total Execution Time: " . sprintf('%.3f', $time_end - $time_start) . 's', color: 'dim',
-			background_color: 'cyan');
+			background_color: 'green');
 	}
 
 	private function help(){
@@ -96,6 +96,9 @@ class Command{
 	}
 
 	private function run($files, $isMigration = true){
+		Console::log("\u{00B7}Ordering objects...", 'light_cyan');
+		$objects          = [];
+		$objectsWithOrder = [];
 		foreach($files as $file){
 			$class = basename($file, '.php');
 			if($isMigration){
@@ -104,9 +107,30 @@ class Command{
 			else{
 				$class = 'Database\\Seeds\\' . $class;
 			}
-			Console::log("\u{00B7}Processing: " . $class, 'light_cyan');
 			$obj = new $class();
-			$obj->run();
+			if(property_exists($obj, 'order')){
+				$objectsWithOrder[$obj->order] = $obj;
+			}
+			else{
+				$objects[] = $obj;
+			}
+		}
+		ksort($objectsWithOrder);
+		foreach($objectsWithOrder as $object){
+			$objects[] = $object;
+		}
+		foreach($objects as $object){
+			Console::log("\u{00B7}Processing: " . get_class($object), 'light_cyan');
+			if($isMigration){
+				Console::log("\tDropping old data");
+				$object->down();
+				Console::log("\tCreating new table");
+				$object->up();
+				Console::log("\tDone", 'light_green', newline: true);
+			}
+			else{
+				$object->run();
+			}
 		}
 	}
 

@@ -52,11 +52,11 @@ class Console{
 	 * @param string  $str     Input String
 	 * @param string  $color   Text Color
 	 * @param boolean $newline Append EOF?
-	 * @param  [type]  $background Background Color
+	 * @param null    $background_color
 	 *
-	 * @return [type]              Formatted output
+	 * @return void [type]              Formatted output
 	 */
-	public static function log($str = '', $color = 'normal', $newline = true, $background_color = null){
+	public static function log(string $str = '', string $color = 'normal', bool $newline = true, $background_color = null){
 		if(is_bool($color)){
 			$newline = $color;
 			$color   = 'normal';

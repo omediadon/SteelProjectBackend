@@ -2,16 +2,19 @@
 
 namespace Database\Migrations;
 
+use App\Models\Role;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use System\Models\Enums\ActiveStatus;
 
-class UserMigration{
-	function run(){
+class UserMigration extends Migration{
+	const table = 'users';
+	public int $order = 4;
+
+	public function up(){
 		Capsule::schema()
-			   ->dropIfExists('users');
-		Capsule::schema()
-			   ->create('users', function(Blueprint $table){
+			   ->create(self::table, function(Blueprint $table){
 				   $table->id();
 				   $table->string('username')
 						 ->unique();
@@ -20,6 +23,7 @@ class UserMigration{
 				   $table->string('password');
 				   $table->string('email')
 						 ->unique();
+				   $table->integer('role_id')->unsigned();
 				   $table->string('profile_picture')
 						 ->nullable();
 				   $table->enum('status', [
@@ -33,5 +37,20 @@ class UserMigration{
 				   $table->timestampsTz();
 				   $table->softDeletesTz();
 			   });
+		Capsule::schema()
+			   ->table(self::table, function(Blueprint $table){
+			$table->foreign('role_id')
+				  ->references('id')
+				  ->on('roles');
+		});
+	}
+
+	public function down(){
+		Capsule::schema()
+			   ->disableForeignKeyConstraints();
+		Capsule::schema()
+			   ->dropIfExists(self::table);
+		Capsule::schema()
+			   ->enableForeignKeyConstraints();
 	}
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
 use App\Models\User;
 use Faker\Factory as Faker;
 use Faker\Generator;
@@ -25,6 +26,10 @@ class UserFactory extends Factory{
 			'username' => $this->faker->userName(),
 			'name'     => $this->faker->name(),
 			'email'    => $this->faker->email(),
+			'role_id'  => function(){
+				return Role::where('name', 'member')
+						   ->first()->id;
+			},
 			'password' => password_hash('password', PASSWORD_DEFAULT),
 			'status'   => ActiveStatus::STATUS_INACTIVE,
 		];
@@ -32,6 +37,11 @@ class UserFactory extends Factory{
 
 	public function configure(): UserFactory{
 		return $this->afterCreating(function(User $user){
+			if($user->id == 1){
+				$user->role()
+					 ->associate(Role::where('name', 'admin')
+									 ->first());
+			}
 			$dir   = FileUtils::avatarsPath();
 			$dbDir = FileUtils::avatarsPublicPath();
 			if(!file_exists($dir)){
