@@ -1,7 +1,7 @@
 
 # SteelProject  Roadmap  
 
-![11%](https://progress-bar.dev/11/?width=500&title=Project%20Competion)
+![11%](https://progress-bar.dev/11/?width=500&title=Project%20Completion)
 
 ##  0.0.2.0   ![54%](https://progress-bar.dev/54/?width=250&title=Progress) 
 
