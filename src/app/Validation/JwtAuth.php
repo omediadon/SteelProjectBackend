@@ -6,7 +6,7 @@ use Cake\Chronos\Chronos;
 use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use UnexpectedValueException;
+use function is_array;
 
 final class JwtAuth{
 
@@ -24,7 +24,7 @@ final class JwtAuth{
 	 *
 	 * @return int The lifetime in seconds
 	 */
-	public function getLifetime() : int{
+	public function getLifetime(): int{
 		return $this->lifetime;
 	}
 
@@ -32,17 +32,20 @@ final class JwtAuth{
 	 * Create JSON web token.
 	 *
 	 * @param array $context
+	 * @param bool  $forRefresh Can this token be used to refresh another token
 	 *
 	 * @return string The jwt
-	 * @throws UnexpectedValueException
-	 *
 	 */
-	public function createJwt(array $context) : string{
-		$secret_Key   = $_ENV['JWT_SECRET'];
-		$now          = Chronos::now();
-		$issuedAt     = $now->getTimestamp();
-		$expire_at    = $now->addSeconds($this->lifetime)
-							->getTimestamp();
+	public function createJwt(array $context, bool $forRefresh = false): string{
+		$secret_Key = $_ENV['JWT_SECRET'];
+		$now        = Chronos::now();
+		$issuedAt   = $now->getTimestamp();
+		$expire_at  = $now->addSeconds($this->lifetime)
+						  ->getTimestamp();
+		if($forRefresh){
+			$expire_at = $now->addWeek(2)
+							 ->getTimestamp();
+		}
 		$request_data = [
 			'iat'     => $issuedAt,
 			'iss'     => $this->issuer,
@@ -50,6 +53,10 @@ final class JwtAuth{
 			'exp'     => $expire_at,
 			'context' => $context,
 		];
+
+		if($forRefresh){
+			$request_data['context']['canRefresh'] = true;
+		}
 
 		return JWT::encode($request_data, $secret_Key, 'HS512');
 	}
@@ -61,9 +68,10 @@ final class JwtAuth{
 	 *
 	 * @return bool The status
 	 */
-	public function validateToken(string $accessToken) : bool{
+	public function validateToken(string $accessToken): bool{
 		$secret_Key = $_ENV['JWT_SECRET'];
-		$now        = Chronos::now()->getTimestamp();
+		$now        = Chronos::now()
+							 ->getTimestamp();
 		try{
 			$token = JWT::decode($accessToken, new Key($secret_Key, 'HS512'));
 		}
@@ -71,7 +79,8 @@ final class JwtAuth{
 			return false;
 		}
 
-		if($token->iss !== $this->issuer || $token->nbf > $now || empty($token->context) || $token->exp < $now){
+		if($token->iss !== $this->issuer || $token->nbf > $now || empty($token->context) || $token->exp < $now ||
+		   !is_array($token->context)){
 			return false;
 		}
 

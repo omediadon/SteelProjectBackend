@@ -66,8 +66,10 @@ class UserApiController extends ApiController{
 				/**
 				 * @var JwtAuth $jwt
 				 */
-				$jwt                           = $this->container->get(JwtAuth::class);
-				$this->data['success']['auth'] = ['token' => $jwt->createJwt(['user' => $user->id])];
+				$jwt                                      = $this->container->get(JwtAuth::class);
+				$this->data['success']['auth']['token']   = $jwt->createJwt(['user' => $user->id]);
+				$this->data['success']['auth']['refresh'] = $jwt->createJwt(['foruser' => $user->id], true);
+
 				return;
 			}
 		}
