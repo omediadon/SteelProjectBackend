@@ -71,7 +71,7 @@ final class JwtAuth{
 			return false;
 		}
 
-		if($token->iss !== $this->issuer || $token->nbf > $now || $token->exp < $now){
+		if($token->iss !== $this->issuer || $token->nbf > $now || empty($token->context) || $token->exp < $now){
 			return false;
 		}
 

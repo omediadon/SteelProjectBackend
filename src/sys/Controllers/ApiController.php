@@ -3,6 +3,7 @@
 namespace System\Controllers;
 
 use Illuminate\Database\Capsule\Manager;
+use Illuminate\Validation\Factory;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -24,27 +25,32 @@ abstract class ApiController{
 	protected Response             $response;
 	private array                  $payload = [];
 
-	public function __construct(protected ContainerInterface $container, protected Manager $manager){
+	public function __construct(protected ContainerInterface $container, protected Manager $manager,
+								protected Factory $validator){
 		$this->router     = $this->container->get(RouteParser::class);
 		$this->siteSetup  = $this->container->get(SiteSettings::class);
 		$this->translator = $this->container->get(Translator::class);
 	}
 
-	final public function render(array $params = []) : Response{
+	final public function render($data = null): Response{
 		if(isset($this->data)){
 			$this->payload["data"] = $this->data;
 		}
 		else{
-			if($this->request->getMethod() == "GET"){
-				$this->status = StatusCodes::HTTP_NOT_FOUND;
+			if(isset($data)){
+				$this->payload['data'] = $data;
 			}
 			else{
-				$this->status = StatusCodes::HTTP_NOT_ACCEPTABLE;
+				if($this->request->getMethod() == "GET"){
+					$this->status = StatusCodes::HTTP_NOT_FOUND;
+				}
+				else{
+					$this->status = StatusCodes::HTTP_NOT_ACCEPTABLE;
+				}
 			}
 		}
 		$this->payload["http"]["code"]    = $this->status;
 		$this->payload["http"]["message"] = StatusCodes::getMessageForCode($this->status);
-
 		if(StatusCodes::canHaveBody($this->status)){
 			$this->response = $this->response->withJson($this->payload, $this->status, JSON_PRETTY_PRINT);
 			$this->response = $this->response->withHeader("Content-type", "application/json");
@@ -64,19 +70,22 @@ abstract class ApiController{
 	 *
 	 * @return Response
 	 */
-	final public function redirect(Response $response, string $name, int $status = 302, array $params = []) : Response{
+	final public function redirect(Response $response, string $name, int $status = 302, array $params = []): Response{
 		return $response->withHeader('Location', $this->router->urlFor($name, $params))
 						->withStatus($status);
 	}
 
 	/**
-	 * @return string
+	 * @param ServerRequest $request
+	 * @param Response      $response
+	 *
+	 * @return void
 	 */
-	final protected function prepare() : string{
-		$params = $this->request->getQueryParams();
-
-		$hl = $_ENV['DEFAULT_LANGUAGE'];
-
+	final protected function prepare(ServerRequest $request, Response $response): void{
+		$this->request  = $request;
+		$this->response = $response;
+		$params         = $this->request->getQueryParams();
+		$hl             = $_ENV['DEFAULT_LANGUAGE'];
 		if($this->request->hasHeader("Accept-Language")){
 			$hq = $this->request->getHeaderLine("Accept-Language");
 			if(strlen($hq) > 2){
@@ -86,13 +95,9 @@ abstract class ApiController{
 				$hl = $hq;
 			}
 		}
-
 		if(isset($params["hl"])){
 			$hl = $params["hl"];
 		}
-
 		$this->translator->setTheLanguage($hl);
-
-		return $hl;
 	}
 }

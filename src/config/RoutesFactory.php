@@ -36,24 +36,18 @@ class RoutesFactory{
 				  ->setName('api');
 
 			$group->group('/users', function(RouteCollectorProxy $subGroup){
-				$subGroup->get('[/]', UserApiController::class . ':index')
-						 ->add(JsonRequestMiddleware::class);
-				$subGroup->get('/all[/]', UserApiController::class . ':index')
-						 ->add(JsonRequestMiddleware::class);
-			})
-				  ->add(JsonRequestMiddleware::class);
+				$subGroup->get('[/]', UserApiController::class . ':index');
+				$subGroup->get('/all[/]', UserApiController::class . ':index');
+				$subGroup->get('/login[/]', UserApiController::class . ':login');
+			});
 
 			$group->group('/token', function(RouteCollectorProxy $subGroup){
-				$subGroup->get('[/]', HomeApiController::class . ':getTestingToken')
-						 ->add(JsonRequestMiddleware::class);
+				$subGroup->get('[/]', HomeApiController::class . ':getTestingToken');
 				$subGroup->get('/protected[/]', HomeApiController::class . ':protectedRoute')
-						 ->add(JwtMiddleware::class)
-						 ->add(JsonRequestMiddleware::class);
-			})
-				  ->add(JsonRequestMiddleware::class);
+						 ->add(JwtMiddleware::class);
+			});
 
-			$group->get("/{params:.*}[/]", HomeApiController::class . ":get404")
-				  ->add(JsonRequestMiddleware::class);
+			$group->get("/{params:.*}[/]", HomeApiController::class . ":get404");
 		})
 			->add(JsonRequestMiddleware::class);
 
@@ -66,6 +60,5 @@ class RoutesFactory{
 					  'OPTIONS',
 				  ], "/{params:.*}[/]", HomeApiController::class . ":get404")
 			->add(JsonRequestMiddleware::class);
-
 	}
 }

@@ -4,6 +4,8 @@ namespace Config;
 
 use App\Validation\JwtAuth;
 use Illuminate\Database\Capsule\Manager;
+use Illuminate\Translation\ArrayLoader;
+use Illuminate\Validation\Factory;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
@@ -18,6 +20,7 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteParser;
 use Slim\Views\Twig;
 use SlimSession\Helper;
+use Symfony\Component\Translation\Translator as SymfonyTranslator;
 use System\Config\SiteSettings;
 use System\Utils\Translator;
 
@@ -40,6 +43,9 @@ class ContainerFactory{
 		$container->set(Helper::class, function(){
 			return new Helper();
 		});
+		$container->set(Factory::class, function(){
+			return new Factory(new \Illuminate\Translation\Translator(new ArrayLoader(), 'en'));
+		});
 
 		// Router
 		$container->set(RouteParser::class, function(ContainerInterface $container){
@@ -54,12 +60,13 @@ class ContainerFactory{
 			$settings = $container->get(SiteSettings::class);
 
 			return Twig::create($settings->storage->views, [
-				'cache' => ($_ENV['ENVIRONMENT'] == 'DEBUG' || $_ENV['ENVIRONMENT'] == 'DEV') ? false : $settings->storage->cache,
+				'cache' => ($_ENV['ENVIRONMENT'] == 'DEBUG' || $_ENV['ENVIRONMENT'] == 'DEV') ? false :
+					$settings->storage->cache,
 			]);
 		});
 
 		// Setting up Eloquent
-		$container->set(Manager::class, function() : Manager{
+		$container->set(Manager::class, function(): Manager{
 			$capsule = new Manager();
 			$capsule->addConnection([
 										'driver'    => $_ENV['DB_DRIVER'],
@@ -90,8 +97,8 @@ class ContainerFactory{
 		$container->set(JwtAuth::class, function(ContainerInterface $container){
 			$config = $container->get(SiteSettings::class)->auth;
 
-			$issuer     = $config->issuer;
-			$lifetime   = $config->lifetime;
+			$issuer   = $config->issuer;
+			$lifetime = $config->lifetime;
 
 			return new JwtAuth($issuer, $lifetime);
 		});
@@ -119,6 +126,5 @@ class ContainerFactory{
 
 			return $logger;
 		});
-
 	}
 }
