@@ -30,7 +30,7 @@ class UserFactory extends Factory{
 				return Role::where('name', 'member')
 						   ->first()->id;
 			},
-			'password' => password_hash('password', PASSWORD_DEFAULT),
+			'password' => password_hash('password', PASSWORD_BCRYPT, ['cost' => 12]),
 			'status'   => ActiveStatus::STATUS_INACTIVE,
 		];
 	}

@@ -25,7 +25,7 @@ class Permission extends Model{
 	 * @var array
 	 */
 	protected $hidden = [
-		'name',
+		'pivot',
 	];
 
 	/**

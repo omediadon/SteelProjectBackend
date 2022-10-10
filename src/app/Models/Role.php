@@ -23,6 +23,15 @@ class Role extends Model{
 	protected $table = 'roles';
 
 	/**
+	 * The attributes excluded from the model's JSON form.
+	 *
+	 * @var array
+	 */
+	protected $hidden = [
+		'pivot',
+	];
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array

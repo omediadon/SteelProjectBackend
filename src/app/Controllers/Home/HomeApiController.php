@@ -13,18 +13,16 @@ use System\Controllers\ApiController;
 class HomeApiController extends ApiController{
 
 	public function index(ServerRequest $request, Response $response) : Response{
-		$this->request  = $request;
-		$this->response = $response;
-		$this->prepare();
+		$this->prepare($request, $response);
+
 		$this->data = new ApiInfo();
 
 		return $this->render();
 	}
 
 	public function getTestingToken(ServerRequest $request, Response $response) : Response{
-		$this->request  = $request;
-		$this->response = $response;
-		$this->prepare();
+		$this->prepare($request, $response);
+
 		/**
 		 * @var JwtAuth $jwt
 		 */
@@ -35,18 +33,15 @@ class HomeApiController extends ApiController{
 	}
 
 	public function protectedRoute(ServerRequest $request, Response $response) : Response{
-		$this->request  = $request;
-		$this->response = $response;
-		$this->prepare();
+		$this->prepare($request, $response);
+
 		$this->data = ['reult'=>'success'];
 
 		return $this->render();
 	}
 
 	public function get404(ServerRequest $request, Response $response) : Response{
-		$this->request  = $request;
-		$this->response = $response;
-		$this->prepare();
+		$this->prepare($request, $response);
 
 		return $this->render();
 	}
