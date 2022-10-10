@@ -39,6 +39,7 @@ class RoutesFactory{
 				$subGroup->get('[/]', UserApiController::class . ':index');
 				$subGroup->get('/all[/]', UserApiController::class . ':index');
 				$subGroup->get('/login[/]', UserApiController::class . ':login');
+				$subGroup->get('/signup[/]', UserApiController::class . ':signup');
 			});
 
 			$group->group('/token', function(RouteCollectorProxy $subGroup){

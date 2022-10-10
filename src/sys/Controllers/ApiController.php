@@ -13,6 +13,9 @@ use SlimSession\Helper;
 use System\Config\SiteSettings;
 use System\Utils\StatusCodes;
 use System\Utils\Translator;
+use function call_user_func_array;
+use function is_a;
+use function method_exists;
 
 abstract class ApiController{
 	protected int                  $status  = StatusCodes::HTTP_OK;
@@ -32,22 +35,17 @@ abstract class ApiController{
 		$this->translator = $this->container->get(Translator::class);
 	}
 
-	final public function render($data = null): Response{
+	final public function render(): Response{
 		if(isset($this->data)){
 			$this->payload["data"] = $this->data;
 		}
 		else{
-			if(isset($data)){
-				$this->payload['data'] = $data;
-			}
-			else{
 				if($this->request->getMethod() == "GET"){
 					$this->status = StatusCodes::HTTP_NOT_FOUND;
 				}
 				else{
 					$this->status = StatusCodes::HTTP_NOT_ACCEPTABLE;
 				}
-			}
 		}
 		$this->payload["http"]["code"]    = $this->status;
 		$this->payload["http"]["message"] = StatusCodes::getMessageForCode($this->status);
@@ -99,5 +97,20 @@ abstract class ApiController{
 			$hl = $params["hl"];
 		}
 		$this->translator->setTheLanguage($hl);
+	}
+
+	public function __call($method, $arguments){
+		if(method_exists($this, 'the' . $method)){
+			if(is_a($arguments[0], ServerRequest::class) && is_a($arguments[1], Response::class)){
+				$this->prepare($arguments[0], $arguments[1]);
+
+				 call_user_func_array([
+												$this,
+												'the' . $method,
+											], $arguments);
+
+				return $this->render();
+			}
+		}
 	}
 }

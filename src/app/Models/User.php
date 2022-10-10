@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use PHPUnit\Framework\InvalidArgumentException;
 use System\Models\User as SystemUser;
 
 /**

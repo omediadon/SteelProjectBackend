@@ -5,6 +5,7 @@ namespace App\Controllers\User;
 use App\Models\Role;
 use App\Models\User;
 use App\Validation\JwtAuth;
+use Illuminate\Database\Eloquent\Builder;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use System\Controllers\ApiController;
@@ -22,23 +23,81 @@ class UserApiController extends ApiController{
 		$user = User::find(1);
 		// This s a member
 		$anotherUser = User::find(5);
-		$data        = [
+		$this->data  = [
 			$user->can('can_edit_reviews'),
 			$anotherUser->can('can_edit_reviews'),
 		];
 
-		return $this->render($data);
+		return $this->render();
 	}
 
-	public function login(ServerRequest $request, Response $response): Response{
-		$this->prepare($request, $response);
-
-		$val        = $this->validator;
-		$messages   = [
-			'username.required' => 'Username is required.',
-			'password.required' => 'Email is required.',
+	public function thesignup(ServerRequest $request, Response $response): Response{
+		$passwordRegex = '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/';
+		$messages      = [
+			'name.required'     => $this->translator->t('Username is required.'),
+			'username.required' => $this->translator->t('Username is required.'),
+			'password.required' => $this->translator->t('Password is required.'),
+			'password.regex'    => $this->translator->t('Password is not strong enough.'),
+			'email.required'    => $this->translator->t('Email is required.'),
+			'email.email'       => $this->translator->t('Email format is incorrect.'),
 		];
-		$validation = $val->make($request->getParsedBody() ?? [], [
+		$validation    = $this->validator->make($request->getParsedBody() ?? [], [
+			'username' => 'required',
+			'name'     => 'required',
+			'password' => 'required|regex:' . $passwordRegex,
+			'email'    => 'required|email',
+		], $messages);
+		$this->data    = [];
+		if($validation->fails()){
+			$this->status       = StatusCodes::HTTP_BAD_REQUEST;
+			$this->data['fail'] = $validation->getMessageBag();
+		}
+		else{
+			$this->performSignUp($this->request->getParsedBody());
+		}
+
+		return $this->render();
+	}
+
+	private function performSignUp(array $signupData){
+		/**
+		 * @var Builder $query
+		 */
+		$query = User::where(function(Builder $query) use ($signupData){
+			$query->where('username', '=', $signupData['username'])
+				  ->orWhere('email', '=', $signupData['email']);
+		});
+		$userExists = $query->count()>0;
+
+		if(!$userExists){
+			$user           = new User();
+			$user->password = $signupData['password'];
+			$user->username = $signupData['username'];
+			$user->name     = $signupData['name'];
+			$user->email    = $signupData['email'];
+			$user->role()
+				 ->associate(Role::where('name', 'member')
+								 ->first());
+			// $user->touch();
+			if($user->save()){
+
+				$this->data['success']['auth']['id']      = $user->id;
+				$this->data['success']['auth']['message'] = $this->translator->t('User has been created successfully');
+
+				return;
+			}
+		}
+
+		$this->status               = StatusCodes::HTTP_UNAUTHORIZED;
+		$this->data['fail']['auth'] = $this->translator->t('Could not sign up.');
+	}
+
+	public function thelogin(ServerRequest $request, Response $response): Response{
+		$messages   = [
+			'username.required' => $this->translator->t('Username is required.'),
+			'password.required' => $this->translator->t('Email is required.'),
+		];
+		$validation = $this->validator->make($request->getParsedBody() ?? [], [
 			'username' => 'required',
 			'password' => 'required',
 		], $messages);
@@ -48,20 +107,20 @@ class UserApiController extends ApiController{
 			$this->data['fail'] = $validation->getMessageBag();
 		}
 		else{
-			$this->performLogin();
+			$this->performLogin($this->request->getParsedBody());
 		}
 
 		return $this->render();
 	}
 
-	private function performLogin(){
+	private function performLogin($loginData){
 		/**
 		 * @var User $user
 		 */
-		$user = User::where('username', $this->request->getParsedBody()['username'])
+		$user = User::where('username', $loginData['username'])
 					->first();
 		if(isset($user)){
-			$valid = password_verify($this->request->getParsedBody()['password'], $user->password);
+			$valid = password_verify($loginData['password'], $user->password);
 			if($valid){
 				/**
 				 * @var JwtAuth $jwt
