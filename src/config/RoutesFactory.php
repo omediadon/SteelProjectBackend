@@ -13,7 +13,9 @@ namespace Config;
 use App\Controllers\Home\HomeApiController;
 use App\Controllers\Home\HomeBrowserController;
 use App\Controllers\User\UserApiController;
+use App\Middlewares\JwtAdminMiddleware;
 use App\Middlewares\JwtMiddleware;
+use App\Middlewares\JwtRoleMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 use System\Config\SiteSettings;
@@ -25,13 +27,10 @@ class RoutesFactory{
 
 	static function setUpRoutes(App &$app){
 
-		$settings = $app->getContainer()
-						->get(SiteSettings::class);
-
 		$app->get('[/]', HomeBrowserController::class . ':getHome')
 			->setName('home');
 
-		$app->group('/api', function(RouteCollectorProxy $group){
+		$app->group('/api', function(RouteCollectorProxy $group) use (&$app){
 			$group->get('[/[info[/]]]', HomeApiController::class . ':index')
 				  ->setName('api');
 
@@ -42,10 +41,14 @@ class RoutesFactory{
 				$subGroup->get('/signup[/]', UserApiController::class . ':signup');
 			});
 
-			$group->group('/token', function(RouteCollectorProxy $subGroup){
+			$group->group('/token', function(RouteCollectorProxy $subGroup) use (&$app){
 				$subGroup->get('[/]', HomeApiController::class . ':getTestingToken');
 				$subGroup->get('/protected[/]', HomeApiController::class . ':protectedRoute')
 						 ->add(JwtMiddleware::class);
+				$subGroup->get('/admin[/]', HomeApiController::class . ':protectedRoute')
+						 ->add(JwtAdminMiddleware::class);
+				$subGroup->get('/role[/]', HomeApiController::class . ':protectedRoute')
+						 ->add(new JwtRoleMiddleware($app->getContainer(), 'member'));
 			});
 
 			$group->get("/{params:.*}[/]", HomeApiController::class . ":get404");

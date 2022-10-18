@@ -7,6 +7,9 @@ use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use function is_array;
+use function json_decode;
+use function json_encode;
+use function property_exists;
 
 final class JwtAuth{
 
@@ -17,15 +20,6 @@ final class JwtAuth{
 	 * @param int    $lifetime The max lifetime
 	 */
 	public function __construct(private string $issuer, private int $lifetime){
-	}
-
-	/**
-	 * Get JWT max lifetime.
-	 *
-	 * @return int The lifetime in seconds
-	 */
-	public function getLifetime(): int{
-		return $this->lifetime;
 	}
 
 	/**
@@ -40,16 +34,19 @@ final class JwtAuth{
 		$secret_Key = $_ENV['JWT_SECRET'];
 		$now        = Chronos::now();
 		$issuedAt   = $now->getTimestamp();
+		$notBefore  = $now->getTimestamp();
 		$expire_at  = $now->addSeconds($this->lifetime)
 						  ->getTimestamp();
 		if($forRefresh){
 			$expire_at = $now->addWeek(2)
 							 ->getTimestamp();
+			$notBefore = $now->addHour(24)
+							 ->getTimestamp();
 		}
 		$request_data = [
 			'iat'     => $issuedAt,
 			'iss'     => $this->issuer,
-			'nbf'     => $issuedAt,
+			'nbf'     => $notBefore,
 			'exp'     => $expire_at,
 			'context' => $context,
 		];
@@ -70,20 +67,38 @@ final class JwtAuth{
 	 */
 	public function validateToken(string $accessToken): bool{
 		$secret_Key = $_ENV['JWT_SECRET'];
-		$now        = Chronos::now()
-							 ->getTimestamp();
 		try{
 			$token = JWT::decode($accessToken, new Key($secret_Key, 'HS512'));
 		}
-		catch(Exception $e){
+		catch(Exception){
 			return false;
 		}
+		$now = Chronos::now()
+					  ->getTimestamp();
 
-		if($token->iss !== $this->issuer || $token->nbf > $now || empty($token->context) || $token->exp < $now ||
-		   !is_array($token->context)){
+		if($token->iss !== $this->issuer || $token->nbf > $now || $token->exp < $now ||
+		   !property_exists($token->context, 'user')){
 			return false;
 		}
 
 		return true;
+	}
+
+	public function getContextFromToken(string $token): object|null{
+		try{
+			$token = JWT::decode($token, new Key($_ENV['JWT_SECRET'], 'HS512'));
+		}
+		catch(Exception $e){
+			return null;
+		}
+		$now = Chronos::now()
+					  ->getTimestamp();
+
+		if($token->iss !== $this->issuer || $token->nbf > $now || $token->exp < $now ||
+		   !property_exists($token->context, 'user')){
+			return null;
+		}
+
+		return $token->context;
 	}
 }

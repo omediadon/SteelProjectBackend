@@ -20,7 +20,6 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteParser;
 use Slim\Views\Twig;
 use SlimSession\Helper;
-use Symfony\Component\Translation\Translator as SymfonyTranslator;
 use System\Config\SiteSettings;
 use System\Utils\Translator;
 
